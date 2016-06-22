@@ -14,6 +14,19 @@
 
 #include "ShaderFuncs.h"
 
+char laberynth[10][10] = {
+						1,1,1,1,1,1,1,1,1,1,
+						1,0,0,0,1,1,0,1,0,1,
+						1,1,1,0,0,0,0,1,0,1,
+						1,0,0,0,1,1,0,1,0,1,
+						1,0,1,0,0,0,0,1,0,1,
+						1,1,1,1,0,0,0,0,0,1,
+						1,0,0,0,0,1,1,1,0,1,
+						1,0,1,1,0,0,0,1,0,1,
+						1,0,0,0,0,0,0,1,0,1,
+						1,1,1,1,1,1,1,1,1,1 
+};
+
 GLfloat vertexPositions[] = {
 	//cuadrado//
 	/*0.75f, 0.75f, 0.0f, 1.0f,
@@ -154,7 +167,7 @@ std::string strVertexShader,
 
 
 Application::Application() :fAngle(0.0),
-							eye(1.5f, 1.5f, -1.5f),
+							eye(0.0f, 40.0f, 20.0f),
 							target(0.0f, 0.0f, 0.0f)
 {}
 
@@ -206,19 +219,44 @@ void Application::display()
 	//activamos el vertex array object y dibujamos
 	glBindVertexArray(cube.vao);
 
-	for (int i = 0; i < 10;i++)
+	/*for (int i = 0; i < 10;i++)
 	{ 	
+		glm::mat4 position = glm::translate(glm::mat4(1.0f), glm::vec3(2.0f*i));
 		for (int j = 0; j < 10;j++)
 		{
-			glm::mat4 position = glm::translate(glm::mat4(1.0f), glm::vec3(2.0f*i));
+			
 			position = glm::translate(position, glm::vec3(-10.0f, -10.0f, -0.9f));
 
-			glm::mat4 transform = camera * position/* cube.rotation*/;
+			glm::mat4 transform = camera * position cube.rotation;
 			transform = glm::perspective(45.0f, 640.0f / 480.0f, 0.1f, 100.0f) * transform;
-			glUniformMatrix4fv(uTransform, 1, GL_FALSE, glm::value_ptr(transform));
-			glDrawArrays(GL_TRIANGLES, 0, cube.numVertex);
+			if (laberynth[i][j]==1)
+			{
+				glUniformMatrix4fv(uTransform, 1, GL_FALSE, glm::value_ptr(transform));
+				glDrawArrays(GL_TRIANGLES, 0, cube.numVertex);
+			}
+		}
+	}*/
+
+	for (int j = 0; j < 10; j++)
+	{
+		glm::mat4 position2 = glm::translate(glm::mat4(1.0f), (glm::vec3(2.0f, 2.0f, 2.0f*j)));
+
+		for (int i = 0; i < 10; i++)
+		{
+			glm::mat4 position = glm::translate(glm::mat4(1.0f), (glm::vec3(2.0f*i, 2.0f, 1.0f)));
+			position = glm::translate(position, glm::vec3(-10.0f, -10.0f, 0.9f));
+
+			glm::mat4 transform = camera * position * position2;
+			transform = glm::perspective(45.0f, 680.0f / 480.0f, 0.1f, 200.0f) * transform;
+			if (laberynth[i][j] == 1)
+			{
+				glUniformMatrix4fv(uTransform, 1, GL_FALSE, glm::value_ptr(transform));
+
+				glDrawArrays(GL_TRIANGLES, 0, cube.numVertex);
+			}
 		}
 	}
+
 }
 
 void Application::reshape(int w, int h)

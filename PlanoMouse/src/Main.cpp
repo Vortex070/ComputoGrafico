@@ -10,7 +10,16 @@
 
 Application app;
 
-
+char laberynth[10][10] = {1,1,1,1,1,1,1,1,1,1,
+						1,0,0,0,1,1,0,1,0,1,
+						1,1,1,0,0,0,0,1,0,1,
+						1,0,0,0,1,1,0,1,0,1,
+						1,0,1,0,0,0,0,1,0,1,
+						1,1,1,1,0,0,1,0,0,1, 
+						1,0,0,0,0,1,1,1,0,1, 
+						1,0,1,1,0,0,0,1,0,1, 
+						1,0,0,0,0,0,0,1,0,1, 
+						1,1,1,1,1,1,1,1,1,1};
 
 //Se tiene que llamar despues de inicializar la ventana y el OpenGL, pero antes del main loop
 void setup()
@@ -36,10 +45,13 @@ void keyboard(GLFWwindow *window, int key, int scanCode, int action, int mods)
 	app.keyboard(key, scanCode, action, mods);
 }
 
+void cursor_pos_callback(GLFWwindow *window, double Xpos, double Ypos)
+{
+	app.cursor_position(Xpos, Ypos);
+}
+
 int main(int argc, char *argv[])
 {
-	Application app;
-
 	GLFWwindow* window;
 
 	/* Initialize the library */
@@ -61,7 +73,7 @@ int main(int argc, char *argv[])
 	glewInit();
 	app.setup();
 
-	// get version info 
+	// get version info
 	const GLubyte* renderer = glGetString (GL_RENDERER); 
 	const GLubyte* version = glGetString (GL_VERSION); 
 	printf (" Renderer: %s\ n", renderer); 
@@ -74,6 +86,7 @@ int main(int argc, char *argv[])
 	glViewport(0, 0, (GLsizei)640, (GLsizei)480);
 
 	glfwSetKeyCallback(window, keyboard);
+	glfwSetCursorPosCallback(window, cursor_pos_callback);
 
 	while (!glfwWindowShouldClose(window))
 	{

@@ -10,8 +10,6 @@
 
 Application app;
 
-
-
 //Se tiene que llamar despues de inicializar la ventana y el OpenGL, pero antes del main loop
 void setup()
 {
@@ -31,10 +29,31 @@ void reshape(int w, int h)
 	app.reshape(w, h);
 }
 
-void keyboard(GLFWwindow *window, int key, int scanCode, int action, int mods)
-{
+void keyboard(GLFWwindow * window, int key, int scanCode, int action, int mods) {
 	app.keyboard(key, scanCode, action, mods);
 }
+
+void _update_fps_counter(GLFWwindow* window) {
+	static double previous_seconds = glfwGetTime();//funcion para obtener tiempo
+	static int frame_count;
+	double current_seconds = glfwGetTime();
+	double elapsed_seconds = current_seconds - previous_seconds;
+	if (elapsed_seconds > 0.25) {
+		previous_seconds = current_seconds;
+		double fps = (double)frame_count / elapsed_seconds;
+		char tmp[128];
+		sprintf_s(tmp, "opengl @ fps: %.2f", fps);
+		glfwSetWindowTitle(window, tmp);
+		frame_count = 0;
+	}
+	frame_count++;
+}
+
+static void  cursor_pos_callback(GLFWwindow * window, double Xpos, double Ypos) {
+	//if (window == app.window)
+		app.cursor_position(Xpos, Ypos);
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -47,7 +66,7 @@ int main(int argc, char *argv[])
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Hello cube", NULL, NULL);
+	window = glfwCreateWindow(1024, 768, "Plane", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -55,7 +74,7 @@ int main(int argc, char *argv[])
 	}
 
 	/* Make the window's context current */
-	glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(window);//ocupar esta ventana para openGL
 
 	glewExperimental = GL_TRUE; 
 	glewInit();
@@ -71,14 +90,17 @@ int main(int argc, char *argv[])
 	//glEnable (GL_DEPTH_TEST); // enable depth-testing 	
 	//glDepthFunc (GL_LESS); // depth-testing interprets a smaller value as "closer" 
 
-	glViewport(0, 0, (GLsizei)640, (GLsizei)480);
+	glViewport(0, 0, (GLsizei)1024, (GLsizei)768);
 
-	glfwSetKeyCallback(window, keyboard);
+
+	glfwSetCursorPosCallback(window, cursor_pos_callback);
 
 	while (!glfwWindowShouldClose(window))
 	{
+		//_update_fps_counter(window);
 		/* update other events like input handling */
 		glfwPollEvents();
+		//glfwSetCursorPosCallback(window, cursor_pos_callback);
 
 		app.update();
 

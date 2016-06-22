@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Application.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Plane.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderFuncs.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Application.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShaderFuncs.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Object3D.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Plane.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\fragmentShader1.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\vertexShader1.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\passTrhu.v">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\passThru.f">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\gouraudPlane.v">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{e07191c1-6e96-4e02-a708-be11de31567b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{ed86e908-c24e-4ced-9f5f-db77ae1c2605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{14c3582e-067e-4720-b8fa-117dab033e8b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
